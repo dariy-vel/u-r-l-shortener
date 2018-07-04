@@ -10,7 +10,7 @@ def generate_short_url():
     return output
 
 
-def home(request, generated_url =""):
+def home(request, generated_url=""):
     if request.method == 'POST':
         form = AddLongURLForm(request.POST)
 
@@ -20,6 +20,7 @@ def home(request, generated_url =""):
             while LongToShort.objects.filter(short_url = short_url).exists():
                 short_url = generate_short_url()
             shortener_obj.short_url = short_url
+            shortener_obj.owner = request.user
             shortener_obj.save()
             return redirect('home', generated_url=shortener_obj.short_url)
     else:
@@ -29,5 +30,15 @@ def home(request, generated_url =""):
 
 def redirecto(request, url):
     redirect_obj = get_object_or_404(LongToShort, short_url=url)
+    redirect_obj.counter += 1
+    redirect_obj.save()
     redirect_url = redirect_obj.long_url
     return redirect(redirect_url)
+
+
+def table(request):     # Table with info about shortened urls
+    if request.user.is_authenticated:
+        urls = LongToShort.objects.filter(owner=request.user)
+        return render(request, 'table.html', {'urls': urls})
+    else:
+        return redirect('/')

@@ -1,13 +1,18 @@
 {% extends 'wrapper.html' %}
 
 {% block content %}
+{% if user.is_authenticated %}
 <p>Paste here your url in format 'http://your_url.com/page/'</p>
 <form method="post">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" class="btn btn-success" name="submit" value="Make Shortened URL">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-success" name="submit" value="Make Shortened URL">
 </form>
+
 {% if generated_url %}
-<p>Your shortened URL is <p style="color: blue">{{ request.META.HTTP_HOST }}/a/{{generated_url}}</p></p>
+<p>Your shortened URL is <a href="http://{{ request.META.HTTP_HOST }}/a/{{generated_url}}">{{ request.META.HTTP_HOST }}/a/{{generated_url}}</a></p>
+{% endif %}
+{% else %}
+<p>Please login</p>
 {% endif %}
 {% endblock %}

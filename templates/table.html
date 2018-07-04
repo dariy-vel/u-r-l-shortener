@@ -1,0 +1,30 @@
+{% extends 'wrapper.html' %}
+
+{% block content %}
+<div class="container">
+      <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item active">Your URLs</li>
+      </ol>
+      <table class="table">
+        <thead class="thead-inverse">
+          <tr>
+              <th>Name</th>
+            <th>Short URl</th>
+            <th>Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for url in urls %}
+            <tr>
+                <td class="align-middle">{{ url.name }}</td>
+              <td>
+                <a href="http://{{ request.META.HTTP_HOST }}/a/{{url.short_url}}">/{{url.short_url}}</a>
+              </td>
+              <td class="align-middle">{{ url.counter }}</td>
+              <td></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+{% endblock %}
