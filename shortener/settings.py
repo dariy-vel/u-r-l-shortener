@@ -9,6 +9,8 @@ SECRET_KEY = '&il#jz%8*bthok!ki+3v_ep@1tl1pgu$$u4zrf+o02kufj7q!c'
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -17,7 +19,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'LongToShortURL'
+    'LongToShortURL',
+    'loginsys'
 ]
 
 MIDDLEWARE = [
